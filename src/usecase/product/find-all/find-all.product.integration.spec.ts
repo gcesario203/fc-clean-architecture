@@ -3,7 +3,7 @@ import Product from "../../../domain/product/entity/product";
 import ProductFactory from "../../../domain/product/factory/product.factory";
 import ProductModel from "../../../infrastructure/product/db/sequelize/model/product.model";
 import ProductRepository from "../../../infrastructure/product/repository/sequelize/product.repository";
-import FindAllProductsUseCase from "./findAll.product.usecase";
+import FindAllProductsUseCase from "./find-all.product.usecase";
 
 
 describe("find product use case integration tests", () => {

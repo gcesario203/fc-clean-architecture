@@ -1,5 +1,5 @@
 import ProductFactory from "../../../domain/product/factory/product.factory";
-import FindAllProductsUseCase from "./findAll.product.usecase";
+import FindAllProductsUseCase from "./find-all.product.usecase";
 
 const productOne = ProductFactory.create("A", "Martelo de borracha", 21);
 const productTwo = ProductFactory.create("B", "molinete shimano", 400);

@@ -3,7 +3,7 @@ import CustomerFactory from "../../../domain/customer/factory/customer.factory";
 import Address from "../../../domain/customer/value-object/address";
 import CustomerModel from "../../../infrastructure/customer/db/sequelize/model/customer.model";
 import CustomerRepository from "../../../infrastructure/customer/repository/sequelize/customer.repository";
-import FindAllCustomersUseCase from "./findAll.customer.usecase";
+import FindAllCustomersUseCase from "./find-all.customer.usecase";
 
 const customerOne = CustomerFactory.createWithAddress("Carlos Marcio", new Address("Rua Augusta", "321548", "SP", 12));
 

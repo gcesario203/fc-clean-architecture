@@ -1,6 +1,6 @@
 import Customer from "../../../domain/customer/entity/customer";
 import ICustomerRepository from "../../../domain/customer/repository/customer.repository.interface";
-import { InputFindAllCustomerDto, OutputFindAllCustomerDto } from "./findAll.customer.dto";
+import { InputFindAllCustomerDto, OutputFindAllCustomerDto } from "./find-all.customer.dto";
 
 export default class FindAllCustomersUseCase {
     private _customerRepository: ICustomerRepository;
