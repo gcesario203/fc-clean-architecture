@@ -3,6 +3,15 @@ import CustomerModel from "../../../infrastructure/customer/db/sequelize/model/c
 import CreateCustomerUseCase from "./create.customer.usecase"
 import CustomerRepository from "../../../infrastructure/customer/repository/sequelize/customer.repository";
 
+const input = {
+    name: "Cesar",
+    address: {
+        street: "Rua dos bobos",
+        city: "SP",
+        number: 12,
+        zip: "213545"
+    }
+}
 
 describe("Create customer use case integration tests", () => {
     let sequelize: Sequelize;
@@ -20,22 +29,9 @@ describe("Create customer use case integration tests", () => {
         await sequelize.sync();
     })
 
-    afterEach(async () => {
-        await sequelize.close();
-    })
-    
+
     it("should create a customer", async () => {
         const customerRepository = new CustomerRepository();
-
-        const input = {
-            name: "Cesar",
-            address: {
-                street: "Rua dos bobos",
-                city: "SP",
-                number: 12,
-                zip: "213545"
-            }
-        }
 
         const output = await new CreateCustomerUseCase(customerRepository).execute(input);
 
@@ -49,5 +45,32 @@ describe("Create customer use case integration tests", () => {
                 zip: input.address.zip
             }
         });
+
+        await sequelize.close();
+    })
+
+    it("should throw a error when name is missing", async () => {
+        const customerRepository = new CustomerRepository();
+
+        input.name = "";
+
+        await expect(new CreateCustomerUseCase(customerRepository).execute(input))
+            .rejects
+            .toThrow("Name is required")
+
+        await sequelize.close();
+    })
+
+    it("should throw a error when street is missing", async () => {
+        const customerRepository = new CustomerRepository();
+
+        input.address.street = "";
+
+        await expect(new CreateCustomerUseCase(customerRepository).execute(input))
+            .rejects
+            .toThrow("Street is required")
+
+
+        await sequelize.close();
     })
 })

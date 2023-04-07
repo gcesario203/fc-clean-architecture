@@ -33,13 +33,13 @@ export default class Address {
 
     validate() {
         if (this.isNullOrEmpty(this._city))
-            throw Error('Required Field')
+            throw Error('City is required')
         if (this.isNullOrEmpty(this._street))
-            throw Error('Required Field')
+            throw Error('Street is required')
         if (this.isNullOrEmpty(this._zip))
-            throw Error('Required Field')
+            throw Error('Zip is required')
         if (this._number <= 0)
-            throw Error('Required Field')
+            throw Error('Number is required')
     }
 
      isNullOrEmpty(property: string): boolean {
