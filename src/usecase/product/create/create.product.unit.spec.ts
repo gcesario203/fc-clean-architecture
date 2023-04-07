@@ -65,4 +65,14 @@ describe("Create product use case unit tests", () => {
 
         await expect(createProductUseCase.execute(inputTypeB)).rejects.toThrow('The price is less or equals 0')
     })
+
+    it("should throw an error when trying to create a product with invalid type", async() => {
+        const productRepository = mockProductRepository();
+
+        const createProductUseCase = new CreateProductUseCase(productRepository);
+
+        inputTypeB.type = "C";
+
+        await expect(createProductUseCase.execute(inputTypeB)).rejects.toThrow("Product type not supported!")
+    })
 })

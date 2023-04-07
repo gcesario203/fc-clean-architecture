@@ -79,4 +79,16 @@ describe("Create product use case integration tests", () => {
 
         await sequelize.close();
     })
+
+    it("should throw an error when trying to create a product with invalid type", async() => {
+        const productRepository = new ProductRepository();
+
+        const createProductUseCase = new CreateProductUseCase(productRepository);
+
+        inputTypeB.type = "C";
+
+        await expect(createProductUseCase.execute(inputTypeB)).rejects.toThrow("Product type not supported!")
+
+        await sequelize.close();
+    })
 })
