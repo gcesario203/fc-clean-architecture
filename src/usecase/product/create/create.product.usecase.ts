@@ -21,7 +21,6 @@ export default class CreateProductUseCase{
             id: newProduct.id,
             name: newProduct.name,
             price: newProduct.price,
-            type: input.type,
         }
     }
 }

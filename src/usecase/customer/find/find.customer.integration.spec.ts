@@ -70,13 +70,13 @@ describe('Find customer use case integration tests', ()=>{
             id: "1"
         };
 
-        const teste = async () =>{
+        const findCustomer = async () =>{
             await findCustomerUseCase.execute(input);
 
             await sequelize.close();
         }
 
-        expect(teste).rejects.toThrow("Customer not found");
+        expect(findCustomer).rejects.toThrow("Customer not found");
     })
 
 });

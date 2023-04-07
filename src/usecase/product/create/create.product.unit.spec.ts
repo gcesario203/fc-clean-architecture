@@ -37,14 +37,12 @@ describe("Create product use case unit tests", () => {
             id: expect.any(String),
             name: inputTypeA.name,
             price: inputTypeA.price,
-            type: inputTypeA.type
         })
 
         expect(outputTypeB).toEqual({
             id: expect.any(String),
             name: inputTypeB.name,
             price: inputTypeB.price * 2,
-            type: inputTypeB.type
         })
     })
 
