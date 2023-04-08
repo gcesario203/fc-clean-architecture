@@ -34,6 +34,8 @@ describe("Update customer use case integration tests", () => {
 
         await sequelize.sync();
     })
+
+    afterAll(async () => await sequelize.close());
     
     it("should update a customer", async () => {
         const customerRepository = new CustomerRepository();
@@ -45,8 +47,6 @@ describe("Update customer use case integration tests", () => {
         const output = await customerUpdateRepository.execute(input);
 
         expect(output).toEqual(input);
-
-        await sequelize.close();
 
     })
 })

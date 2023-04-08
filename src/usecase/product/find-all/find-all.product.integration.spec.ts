@@ -22,7 +22,7 @@ describe("find product use case integration tests", () => {
         await sequelize.sync();
     })
 
-    afterEach(async () => await sequelize.close());
+    afterAll(async () => await sequelize.close());
 
     it("should find a created product", async () => {
         const productRepository = new ProductRepository();

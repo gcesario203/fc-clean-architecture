@@ -26,6 +26,8 @@ describe("Find All customer use case integration tests", () => {
         await sequelize.sync();
     })
 
+    afterAll(async () => await sequelize.close());
+
     it("should return all created customers", async () => {
         const customerRepository = new CustomerRepository();
 
@@ -44,8 +46,5 @@ describe("Find All customer use case integration tests", () => {
         expect(output.customers[1].id).toBe(customerTwo.id);
         expect(output.customers[1].name).toBe(customerTwo.name);
         expect(output.customers[1].address.street).toBe(customerTwo.Address.street);
-
-
-        await sequelize.close();
     });
 })

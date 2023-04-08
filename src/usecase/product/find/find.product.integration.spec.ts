@@ -29,6 +29,8 @@ describe("find product use case integration tests", ()=> {
 
         await sequelize.sync();
     })
+
+    afterAll(async () => await sequelize.close());
     
     it("should find a created product", async () => {
         const createdProduct = new Product("1", "Camiseta do Palmeiras tamanho GG", 399.40);
@@ -39,8 +41,6 @@ describe("find product use case integration tests", ()=> {
         const result = await new FindProductUseCase(productRepository).execute(input);
 
         expect(result).toEqual(output);
-        
-        await sequelize.close();
     })
 
     it("should not find a product", async () => {
@@ -56,7 +56,5 @@ describe("find product use case integration tests", ()=> {
         await expect(async () =>{
             return findProductUseCase.execute(input);
         }).rejects.toThrow("Product not found");
-
-        await sequelize.close();
     })
 } )

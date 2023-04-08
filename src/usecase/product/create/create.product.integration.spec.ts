@@ -33,6 +33,8 @@ describe("Create product use case integration tests", () => {
         await sequelize.sync();
     })
 
+    afterAll(async () => await sequelize.close());
+
     it("should create a product", async () => {
         const productRepository = new ProductRepository();
 
@@ -53,7 +55,6 @@ describe("Create product use case integration tests", () => {
             price: inputTypeB.price * 2,
         })
         
-        await sequelize.close();
     })
 
     it("should throw an error when trying to insert a product with empty name", async () => {
@@ -65,7 +66,6 @@ describe("Create product use case integration tests", () => {
 
         await expect(createProductUseCase.execute(inputTypeA)).rejects.toThrow("Name is required")
         
-        await sequelize.close();
     })
 
     it("should throw an error when trying to insert a product with the price lower or equals 0", async () => {
@@ -77,7 +77,6 @@ describe("Create product use case integration tests", () => {
 
         await expect(createProductUseCase.execute(inputTypeB)).rejects.toThrow('The price is less or equals 0')
 
-        await sequelize.close();
     })
 
     it("should throw an error when trying to create a product with invalid type", async() => {
@@ -89,6 +88,5 @@ describe("Create product use case integration tests", () => {
 
         await expect(createProductUseCase.execute(inputTypeB)).rejects.toThrow("Product type not supported!")
 
-        await sequelize.close();
     })
 })

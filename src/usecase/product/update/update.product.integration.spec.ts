@@ -21,7 +21,7 @@ describe("Update product use case integration tests", () => {
         await sequelize.sync();
     })
 
-    afterEach(async () => await sequelize.close());
+    afterAll(async () => await sequelize.close());
     
     it("should a product be updated", async () => {
         const productRepository = new ProductRepository();

@@ -29,6 +29,8 @@ describe("Create customer use case integration tests", () => {
         await sequelize.sync();
     })
 
+    afterAll(async () => await sequelize.close());
+
 
     it("should create a customer", async () => {
         const customerRepository = new CustomerRepository();
@@ -45,8 +47,6 @@ describe("Create customer use case integration tests", () => {
                 zip: input.address.zip
             }
         });
-
-        await sequelize.close();
     })
 
     it("should throw a error when name is missing", async () => {
@@ -57,8 +57,6 @@ describe("Create customer use case integration tests", () => {
         await expect(new CreateCustomerUseCase(customerRepository).execute(input))
             .rejects
             .toThrow("Name is required")
-
-        await sequelize.close();
     })
 
     it("should throw a error when street is missing", async () => {
@@ -70,7 +68,5 @@ describe("Create customer use case integration tests", () => {
             .rejects
             .toThrow("Street is required")
 
-
-        await sequelize.close();
     })
 })

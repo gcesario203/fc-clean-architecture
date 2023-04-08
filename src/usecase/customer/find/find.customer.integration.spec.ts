@@ -22,9 +22,7 @@ describe('Find customer use case integration tests', ()=>{
         await sequelize.sync();
     })
 
-    // afterEach(async () => {
-    //     await sequelize.close();
-    // })
+    afterAll(async () => await sequelize.close());
 
     it("should find a customer", async () =>{
 
@@ -57,8 +55,6 @@ describe('Find customer use case integration tests', ()=>{
         const result = await findCustomerUseCase.execute(input); 
 
         expect(result).toEqual(output);
-
-        await sequelize.close();
     })
 
     it("should not find a customer", async () =>{
@@ -72,11 +68,9 @@ describe('Find customer use case integration tests', ()=>{
 
         const findCustomer = async () =>{
             await findCustomerUseCase.execute(input);
-
-            await sequelize.close();
         }
 
-        expect(findCustomer).rejects.toThrow("Customer not found");
+        await expect(findCustomer()).rejects.toThrow("Customer not found");
     })
 
 });
