@@ -1,11 +1,12 @@
+import Entity from "../../@shared/entity/entity.abstract";
 import ProductInterface from "./product.interface";
 
-export default class Product implements ProductInterface {
-    private _id: string;
+export default class Product extends Entity implements ProductInterface {
     private _name: string;
     private _price: number;
 
     constructor(id: string, name: string, price: number) {
+        super();
         this._id = id;
         this._name = name;
         this._price = price;
@@ -18,9 +19,6 @@ export default class Product implements ProductInterface {
 
         this.validate();
     }
-    get id(): string {
-        return this._id;
-    }
 
     get name(): string {
         return this._name;
@@ -32,7 +30,7 @@ export default class Product implements ProductInterface {
         this.validate();
     }
 
-    get price() : number{
+    get price(): number {
         return this._price;
     }
 
@@ -42,12 +40,23 @@ export default class Product implements ProductInterface {
 
     validate() {
         if (!!!this._id)
-            throw Error('Id is required');
+            this.notification.addError({
+                context: "product",
+                message: "Id is required"
+            })
 
         if (!!!this._name)
-            throw Error('Name is required');
+            this.notification.addError({
+                context: "product",
+                message: "Name is required"
+            })
 
         if (this._price <= 0)
-            throw Error('The price is less or equals 0');
+            this.notification.addError({
+                context: "product",
+                message: "The price is less or equals 0"
+            })
+
+        this.throwErrorIfHasAtLeastOne();
     }
 }

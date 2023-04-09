@@ -1,13 +1,15 @@
+import Entity from "../../@shared/entity/entity.abstract";
 import Address from "../value-object/address";
 
-export default class Customer {
-     private _id: string;
-     private _name: string;
-     private _address!: Address;
-     private _active: boolean = true;
-     private _rewardPoints: number = 0;
+export default class Customer extends Entity {
+    private _name: string;
+    private _address!: Address;
+    private _active: boolean = true;
+    private _rewardPoints: number = 0;
 
     constructor(id: string, name: string) {
+        super();
+
         this._id = id;
 
         this._name = name;
@@ -22,17 +24,22 @@ export default class Customer {
     get name(): string {
         return this._name;
     }
-    get id(): string {
-        return this._id;
-    }
 
 
     validate() {
-        if (!!!this._name || this._name.length === 0)
-            throw Error('Name is required');
-
         if (!!!this._id || this._id.length === 0)
-            throw Error('Id is required');
+            this.notification.addError({
+                context: "customer",
+                message: 'Id is required'
+            })
+
+        if (!!!this._name || this._name.length === 0)
+            this.notification.addError({
+                context: "customer",
+                message: 'Name is required'
+            })
+
+        this.throwErrorIfHasAtLeastOne();
     }
 
     set name(name: string) {
@@ -46,13 +53,18 @@ export default class Customer {
     }
 
     activate() {
-        if (!this._address)
-            throw Error('Address is mandatory to activate a costumer');
+        if (!this._address) {
+            this.notification.addError({
+                context: "customer",
+                message: 'Address is mandatory to activate a costumer'
+            })
+            this.throwErrorIfHasAtLeastOne();
+        }
 
         this._active = true;
     }
 
-    isActive(){
+    isActive() {
         return this._active;
     }
 
@@ -60,22 +72,21 @@ export default class Customer {
         this._active = false;
     }
 
-    addRewardPoints(points: number){
+    addRewardPoints(points: number) {
         this._rewardPoints += points;
     }
 
-    changeAddress(newAddress: Address) : Customer
-    {
+    changeAddress(newAddress: Address): Customer {
         this._address = newAddress;
 
         return this;
     }
 
-    get Address(): Address{
+    get Address(): Address {
         return this._address;
     }
 
-    set active (value: boolean){
+    set active(value: boolean) {
         this._active = value;
     }
 }
