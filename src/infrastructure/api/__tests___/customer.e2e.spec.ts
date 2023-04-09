@@ -92,8 +92,8 @@ describe("E2E tests for customer", () => {
         expect(karlMarxResponse.status).toBe(200)
 
         const listResponse = await request(app)
-                                        .get('/customer')
-                                        .send();
+            .get('/customer')
+            .send();
 
         expect(listResponse.status).toBe(200)
         expect(listResponse.body.customers.length).toBe(3)
@@ -101,5 +101,15 @@ describe("E2E tests for customer", () => {
         expect(listResponse.body.customers[0].id).toBe(hoChiMinResponse.body.id)
         expect(listResponse.body.customers[1].id).toBe(karlMarxResponse.body.id)
         expect(listResponse.body.customers[2].id).toBe(leninResponse.body.id)
+
+        const listResponseXml = await request(app)
+            .get('/customer')
+            .set("Accept", "application/xml")
+            .send();
+
+
+        expect(listResponseXml.status).toBe(200)
+
+        expect(listResponseXml.text).toContain(`<?xml version="1.0" encoding="UTF-8"?>`)
     })
 })
