@@ -1,4 +1,5 @@
 import Entity from "../../@shared/entity/entity.abstract";
+import ProductValidatorFactory from "../factory/product.validator.factory";
 import ProductInterface from "./product.interface";
 
 export default class ProductDoubledValue extends Entity implements ProductInterface {
@@ -42,13 +43,8 @@ export default class ProductDoubledValue extends Entity implements ProductInterf
     // }
 
     validate() {
-        if (!!!this._id)
-            throw Error('Id is required');
-
-        if (!!!this._name)
-            throw Error('Name is required');
-
-        if (this._price <= 0)
-            throw Error('The price is less or equals 0');
+        ProductValidatorFactory.create().validate(this);
+        
+        this.throwErrorIfHasAtLeastOne();
     }
 }
